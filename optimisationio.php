@@ -115,14 +115,9 @@ class Optimisationio
      */
     public function textDomain()
     {
-        $domain = self::TEXT_DOMAIN;
-        $locale = apply_filters('plugin_locale', get_locale(), $domain);
-        load_textdomain(
-            $domain,
-            WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo'
-        );
+        // load_plugin_textdomain() applies the plugin_locale filter internally.
         load_plugin_textdomain(
-            $domain,
+            self::TEXT_DOMAIN,
             false,
             dirname(plugin_basename(__FILE__)) . '/lang/'
         );

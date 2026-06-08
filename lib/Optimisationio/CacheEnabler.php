@@ -306,6 +306,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
     public static function on_activation() {
         // multisite and network
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- runs inside register_activation_hook; WordPress has already authorised the request.
         if ( is_multisite() && ! empty($_GET['networkwide']) ) {
             // blog ids
             $ids = self::_get_blog_ids();
@@ -440,6 +441,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         global $wpdb;
 
         // multisite and network
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- runs inside the uninstall hook; WordPress has already authorised the request.
         if ( is_multisite() && ! empty($_GET['networkwide']) ) {
             // legacy blog
             $old = $wpdb->blogid;
@@ -734,7 +736,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     public static function add_admin_links($wp_admin_bar) {
 
         // check user role
-        if ( ! is_admin_bar_showing() OR ! apply_filters('user_can_clear_cache', current_user_can('manage_options')) ) {
+        if ( ! is_admin_bar_showing() OR ! apply_filters('user_can_clear_cache', current_user_can('manage_options')) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- public extensibility filter, kept name-compatible with Cache Enabler.
             return;
         }
 
@@ -781,12 +783,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         }
 
         // validate nonce
-        if ( empty($_GET['_wpnonce']) OR ! wp_verify_nonce($_GET['_wpnonce'], '_cache__clear_nonce') ) {
+        if ( empty($_GET['_wpnonce']) OR ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), '_cache__clear_nonce') ) {
             return;
         }
 
         // check user role
-        if ( ! is_admin_bar_showing() OR ! apply_filters('user_can_clear_cache', current_user_can('manage_options')) ) {
+        if ( ! is_admin_bar_showing() OR ! apply_filters('user_can_clear_cache', current_user_can('manage_options')) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- public extensibility filter, kept name-compatible with Cache Enabler.
             return;
         }
 
@@ -894,7 +896,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     public static function clear_notice() {
 
         // check if admin
-        if ( ! is_admin_bar_showing() OR ! apply_filters('user_can_clear_cache', current_user_can('manage_options')) ) {
+        if ( ! is_admin_bar_showing() OR ! apply_filters('user_can_clear_cache', current_user_can('manage_options')) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- public extensibility filter, kept name-compatible with Cache Enabler.
             return false;
         }
 
@@ -1078,7 +1080,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         }
 
         // validate nonce
-        if ( ! isset($_POST['_cache__status_nonce_' .$post_ID]) OR ! wp_verify_nonce($_POST['_cache__status_nonce_' .$post_ID], Optimisationio_CdnEnabler_BASE) ) {
+        if ( ! isset($_POST['_cache__status_nonce_' .$post_ID]) OR ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_cache__status_nonce_' .$post_ID] ) ), Optimisationio_CdnEnabler_BASE) ) {
             return;
         }
 
@@ -1200,7 +1202,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     */
 
     public static function _is_index() {
-        return basename($_SERVER['SCRIPT_NAME']) != 'index.php';
+        $script_name = isset($_SERVER['SCRIPT_NAME']) ? sanitize_text_field( wp_unslash($_SERVER['SCRIPT_NAME']) ) : '';
+        return basename($script_name) != 'index.php';
     }
 
 
@@ -1263,7 +1266,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     public static function _bypass_cache() {
 
         // bypass cache hook
-        if ( apply_filters('bypass_cache', false) ) {
+        if ( apply_filters('bypass_cache', false) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- public extensibility filter, kept name-compatible with Cache Enabler.
             return true;
         }
 
@@ -1286,6 +1289,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         }
 
         // Request with query strings
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only cache-bypass decision on the public front-end; performs no state change.
         if ( ! empty($_GET) && ! isset( $_GET['utm_source'], $_GET['utm_medium'], $_GET['utm_campaign'] ) && get_option('permalink_structure') ) {
             return true;
         }
@@ -1336,6 +1340,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
         // ignore this tags
         $ignore_tags = (array)apply_filters(
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- public extensibility filter, kept name-compatible with Cache Enabler.
             'cache_minify_ignore_tags',
             array(
                 'textarea',

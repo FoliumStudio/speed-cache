@@ -181,8 +181,10 @@ class Optimisationio_CacheEnablerDisk {
 	public static function get_asset() {
 
 		// Serving a pre-generated cache file: readfile() streaming has no
-		// WP_Filesystem equivalent and this is a front-end hot path.
-		// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_readfile
+		// WP_Filesystem equivalent and this is a front-end hot path. The request
+		// headers below are only used for cache content negotiation (compared via
+		// strtotime()/strpos()), not stored or echoed.
+		// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_readfile, WordPress.Security.ValidatedSanitizedInput
 
 		// set cache handler header
 		header('x-cache-handler: php');
@@ -445,10 +447,10 @@ class Optimisationio_CacheEnablerDisk {
 	public static function _file_path($path = NULL) {
 
 		// Sanitise the host (strip anything that is not a valid host character).
-		$host = isset($_SERVER['HTTP_HOST']) ? strtolower( (string) $_SERVER['HTTP_HOST'] ) : '';
+		$host = isset($_SERVER['HTTP_HOST']) ? strtolower( sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) ) : '';
 		$host = preg_replace('/[^a-z0-9\-\.:]/', '', $host);
 
-		$request_uri = ( $path ? $path : ( isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '' ) );
+		$request_uri = ( $path ? $path : ( isset($_SERVER['REQUEST_URI']) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' ) );
 		$uri_path    = (string) wp_parse_url( $request_uri, PHP_URL_PATH );
 
 		// Reject path traversal attempts.
