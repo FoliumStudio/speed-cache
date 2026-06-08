@@ -99,10 +99,15 @@ class Optimisationio
         }
         $fileName .= str_replace('_', DIRECTORY_SEPARATOR, 'lib_' . $className);
         $fileName .= '.php';
-        require $fileName;
-        // echo $className;
 
-
+        // Resolve against this plugin's own directory, and NEVER fatal on a
+        // missing class file. An autoloader must let class_exists() return
+        // false so other plugins probing for our classes (e.g. wp-disable
+        // shares the Optimisationio_ prefix) don't crash the whole site.
+        $file = __DIR__ . DIRECTORY_SEPARATOR . $fileName;
+        if ( is_readable( $file ) ) {
+            require_once $file;
+        }
     }
 
     /**
