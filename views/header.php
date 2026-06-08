@@ -1,3 +1,4 @@
+<?php defined( 'ABSPATH' ) || exit; ?>
 <div class="wrap">
 <h2><!--Wordpress notices here --></h2>
  <header>

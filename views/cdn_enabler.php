@@ -1,3 +1,4 @@
+<?php defined( 'ABSPATH' ) || exit; ?>
 <?php require_once('header.php'); ?>
 <div class="wrapped">
     <div id="poststuff" class="metabox-holder ppw-settings">

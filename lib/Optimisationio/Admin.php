@@ -24,7 +24,7 @@ class Optimisationio_Admin
     public function load_custom_wp_admin_style($hook)
     {
         if(preg_match('/optimisationio/i', $hook)) {
-            wp_enqueue_style( 'custom_wp_admin_css', plugins_url('css/optimisationio.css', Optimisationio::FILE) );
+            wp_enqueue_style( 'custom_wp_admin_css', plugins_url('css/optimisationio.css', Optimisationio::FILE), array(), '1.6.13' );
         }
 
     }
@@ -41,6 +41,7 @@ class Optimisationio_Admin
         );
         $settings = wp_parse_args( get_option(Optimisationio::OPTION_KEY . '_cdnsettings', array()), $defaults );
         $data     = array('settings' => $settings);
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- View::render() returns a template; dynamic values are escaped inside the view.
         echo Optimisationio_View::render('cdn_enabler', $data);
     }
     public function updateCdnEnabler()
@@ -70,19 +71,22 @@ class Optimisationio_Admin
     {
         // wp cache check
         if (!defined('WP_CACHE') || !WP_CACHE) {
-            echo sprintf(
-                '<div class="notice notice-warning"><p>%s</p></div>',
+            echo wp_kses_post(
                 sprintf(
-                    /* translators: 1: the PHP define() statement, 2: the wp-config.php filename */
-                    __("%1\$s is not set in %2\$s.", 'cache-performance'),
-                    "<code>define('WP_CACHE', true);</code>",
-                    "wp-config.php"
+                    '<div class="notice notice-warning"><p>%s</p></div>',
+                    sprintf(
+                        /* translators: 1: the PHP define() statement, 2: the wp-config.php filename */
+                        esc_html__('%1$s is not set in %2$s.', 'cache-performance'),
+                        '<code>' . esc_html("define('WP_CACHE', true);") . '</code>',
+                        '<code>wp-config.php</code>'
+                    )
                 )
             );
         }
         $selectoptions = Optimisationio_CacheEnabler::_minify_select();
         $settings      = Optimisationio_CacheEnabler::_get_options();
         $data          = array('settings' => $settings, 'selectoptions' => $selectoptions, 'cacheSize' => (Optimisationio_CacheEnabler::get_cache_size() / 1000) . ' Kb');
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- View::render() returns a template; dynamic values are escaped inside the view.
         echo Optimisationio_View::render('cache_enabler', $data);
     }
 
@@ -115,12 +119,12 @@ class Optimisationio_Admin
         if ($type == 'success') {
             printf(
                 "<div class='updated'><p><strong>%s</strong></p></div>",
-                $msg
+                esc_html( $msg )
             );
         } else {
             printf(
                 "<div class='error'><p><strong>%s</strong></p></div>",
-                $msg
+                esc_html( $msg )
             );
         }
     }

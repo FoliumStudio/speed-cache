@@ -1,5 +1,14 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+/*
+ * advanced-cache.php is a drop-in that executes BEFORE WordPress is loaded, so
+ * WP_Filesystem, wp_unslash() and the sanitisation helpers are not available.
+ * The cache path is host-sanitised and path-traversal guarded below, and nonce
+ * checks do not apply to anonymous cached GET requests.
+ */
+// phpcs:disable WordPress.WP.AlternativeFunctions, WordPress.Security.ValidatedSanitizedInput, WordPress.Security.NonceVerification, WordPress.NamingConventions.PrefixAllGlobals
+
 // check if request method is GET
 if ( ! isset( $_SERVER['REQUEST_METHOD'] ) || $_SERVER['REQUEST_METHOD'] != 'GET' ) {
 	return false;

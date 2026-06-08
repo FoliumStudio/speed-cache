@@ -164,10 +164,10 @@ class Optimisationio_CacheEnablerDisk {
 			DIRECTORY_SEPARATOR
 		);
 
-		@unlink($path.self::FILE_HTML);
-		@unlink($path.self::FILE_GZIP);
-		@unlink($path.self::FILE_WEBP_HTML);
-		@unlink($path.self::FILE_WEBP_GZIP);
+		wp_delete_file($path.self::FILE_HTML);
+		wp_delete_file($path.self::FILE_GZIP);
+		wp_delete_file($path.self::FILE_WEBP_HTML);
+		wp_delete_file($path.self::FILE_WEBP_GZIP);
 	}
 
 
@@ -179,6 +179,10 @@ class Optimisationio_CacheEnablerDisk {
 	*/
 
 	public static function get_asset() {
+
+		// Serving a pre-generated cache file: readfile() streaming has no
+		// WP_Filesystem equivalent and this is a front-end hot path.
+		// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_readfile
 
 		// set cache handler header
 		header('x-cache-handler: php');
@@ -222,6 +226,7 @@ class Optimisationio_CacheEnablerDisk {
 
 		// deliver cached file (default)
 		readfile( self::_file_html() );
+		// phpcs:enable
 		exit;
 	}
 
@@ -308,6 +313,10 @@ class Optimisationio_CacheEnablerDisk {
 
 	public static function _create_file($file, $data) {
 
+		// Writing cache files on the front-end hot path; WP_Filesystem needs
+		// credentials and is not available here.
+		// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose, WordPress.WP.AlternativeFunctions.file_system_operations_chmod
+
 		// open file handler
 		if ( ! $handle = @fopen($file, 'wb') ) {
 			wp_die('Can not write to file.');
@@ -324,6 +333,7 @@ class Optimisationio_CacheEnablerDisk {
 		$perms = $perms & 0000666;
 		@chmod($file, $perms);
 		clearstatcache();
+		// phpcs:enable
 	}
 
 
@@ -364,11 +374,12 @@ class Optimisationio_CacheEnablerDisk {
 			if ( is_dir($object) ) {
 				self::_clear_dir($object);
 			} else {
-				unlink($object);
+				wp_delete_file($object);
 			}
 		}
 
 		// delete
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir -- removing an emptied cache directory; no WP_Filesystem on this path.
 		@rmdir($dir);
 
 		// clears file status cache
@@ -438,7 +449,7 @@ class Optimisationio_CacheEnablerDisk {
 		$host = preg_replace('/[^a-z0-9\-\.:]/', '', $host);
 
 		$request_uri = ( $path ? $path : ( isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '' ) );
-		$uri_path    = (string) parse_url( $request_uri, PHP_URL_PATH );
+		$uri_path    = (string) wp_parse_url( $request_uri, PHP_URL_PATH );
 
 		// Reject path traversal attempts.
 		if ( strpos( $uri_path, '..' ) !== false ) {
@@ -552,7 +563,7 @@ class Optimisationio_CacheEnablerDisk {
 
 	public static function _convert_webp_src($src) {
 		$upload_dir = wp_upload_dir();
-		$src_url = parse_url($upload_dir['baseurl']);
+		$src_url = wp_parse_url($upload_dir['baseurl']);
 		$upload_path = $src_url['path'];
 
 		if ( strpos($src, $upload_path) !== false ) {
@@ -598,7 +609,7 @@ class Optimisationio_CacheEnablerDisk {
 
 		$sizes = explode(', ', $srcset);
 		$upload_dir = wp_upload_dir();
-		$src_url = parse_url($upload_dir['baseurl']);
+		$src_url = wp_parse_url($upload_dir['baseurl']);
 		$upload_path = $src_url['path'];
 
 		for ($i=0; $i<count($sizes); $i++) {

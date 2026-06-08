@@ -120,7 +120,7 @@ class Optimisationio_CdnRewrite
         } else {
             $root_site_url = site_url();
         }
-        $parsed_root_site_url = parse_url($root_site_url);
+        $parsed_root_site_url = wp_parse_url($root_site_url);
         if (array_key_exists('scheme', $parsed_root_site_url)) {
             $root_url_scheme = $parsed_root_site_url['scheme'] . '://';
         } else {
@@ -247,7 +247,7 @@ class Optimisationio_CDN_VersionAssets
         $version = false;
 
         if (0 === strpos($url, $this->root_url)) {
-            $parts = parse_url($url);
+            $parts = wp_parse_url($url);
             foreach (array('scheme', 'host', 'path') as $part) {
                 if (!isset($parts[$part])) {
                     return false;

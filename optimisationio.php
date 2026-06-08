@@ -170,11 +170,11 @@ class Optimisationio
     {
         echo '<div class="error"><p><strong>';
         printf(
-            'Error: %3$s requires PHP version %1$s or greater.<br/>' .
-            'Your installed PHP version: %2$s',
-            self::MIN_PHP_VERSION,
-            PHP_VERSION,
-            $this->getPluginName()
+            /* translators: 1: required PHP version, 2: current PHP version, 3: plugin name */
+            esc_html__('Error: %3$s requires PHP version %1$s or greater. Your installed PHP version: %2$s', 'cache-performance'),
+            esc_html(self::MIN_PHP_VERSION),
+            esc_html(PHP_VERSION),
+            esc_html($this->getPluginName())
         );
         echo '</strong></p></div>';
     }
@@ -186,9 +186,10 @@ class Optimisationio
     {
         echo '<div class="error"><p><strong>';
         printf(
-            'Error: %2$s requires WordPress version %1$s or greater.',
-            self::MIN_WP_VERSION,
-            $this->getPluginName()
+            /* translators: 1: required WordPress version, 2: plugin name */
+            esc_html__('Error: %2$s requires WordPress version %1$s or greater.', 'cache-performance'),
+            esc_html(self::MIN_WP_VERSION),
+            esc_html($this->getPluginName())
         );
         echo '</strong></p></div>';
     }

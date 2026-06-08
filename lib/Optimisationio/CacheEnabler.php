@@ -293,7 +293,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         }
 
         // delete advanced cache file
-        unlink(WP_CONTENT_DIR . '/advanced-cache.php');
+        wp_delete_file( WP_CONTENT_DIR . '/advanced-cache.php' );
     }
 
 
@@ -328,7 +328,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
             self::_set_wp_cache(true);
         }
 
-        // copy advanced cache file
+        // copy advanced cache file (standard page-cache drop-in into wp-content)
+        // phpcs:ignore PluginCheck.CodeAnalysis.WriteFile.PluginDirectoryWrite, WordPress.WP.AlternativeFunctions.file_system_operations_copy -- installing the advanced-cache.php drop-in is core cache-plugin behaviour and targets wp-content, not the plugin folder.
         copy(Optimisationio_CdnEnabler_DIR . '/advanced-cache.php', WP_CONTENT_DIR . '/advanced-cache.php');
     }
 
@@ -387,6 +388,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     public static function _set_wp_cache($wp_cache_value = true) {
         $wp_config_file = ABSPATH . 'wp-config.php';
 
+        // Toggling WP_CACHE means editing wp-config.php directly; WP_Filesystem is
+        // not reliably available at (de)activation, so native file calls are used.
+        // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_is_writable, WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose, PluginCheck.CodeAnalysis.WriteFile.ABSPATHDetected
         if ( file_exists( $wp_config_file ) && is_writable( $wp_config_file ) ) {
             // get wp config as array
             $wp_config = file( $wp_config_file );
@@ -421,6 +425,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
             @fclose( $fh );
         }
+        // phpcs:enable
     }
 
 
@@ -510,6 +515,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     public static function _get_blog_ids() {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- simple blog-id list for multisite cache install/clear; no caching layer applies.
         return $wpdb->get_col("SELECT blog_id FROM `$wpdb->blogs`");
     }
 
@@ -573,7 +579,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         if ( !Optimisationio_CacheEnablerDisk::is_permalink() AND current_user_can('manage_options') ) { ?>
 
             <div class="error">
-                <p><?php printf( __('The <b>%s</b> plugin requires a custom permalink structure to start caching properly. Please go to <a href="%s">Permalink</a> to enable it.', 'cache-performance'), 'Speed Cache', admin_url( 'options-permalink.php' ) ); ?></p>
+                <p><?php
+                printf(
+                    /* translators: 1: plugin name, 2: Permalink settings URL */
+                    wp_kses( __('The <b>%1$s</b> plugin requires a custom permalink structure to start caching properly. Please go to <a href="%2$s">Permalink</a> to enable it.', 'cache-performance'), array( 'b' => array(), 'a' => array( 'href' => array() ) ) ),
+                    esc_html( 'Speed Cache' ),
+                    esc_url( admin_url( 'options-permalink.php' ) )
+                );
+                ?></p>
             </div>
 
         <?php
@@ -609,7 +622,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                         ),
                         admin_url('options-general.php')
                     ),
-                    esc_html__('Settings')
+                    esc_html__('Settings', 'cache-performance')
                 )
             )
         );
@@ -1201,7 +1214,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     */
 
     public static function _is_mobile() {
-        return ( strpos(TEMPLATEPATH, 'wptouch') OR strpos(TEMPLATEPATH, 'carrington') OR strpos(TEMPLATEPATH, 'jetpack') OR strpos(TEMPLATEPATH, 'handheld') );
+        $template = get_template_directory();
+        return ( strpos($template, 'wptouch') OR strpos($template, 'carrington') OR strpos($template, 'jetpack') OR strpos($template, 'handheld') );
     }
 
 
@@ -1508,9 +1522,18 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
             );
         }
 
-        // output drowdown
-        echo sprintf(
-            '<div class="misc-pub-section" style="border-top:1px solid #eee">
+        // output dropdown
+        $allowed_html = array(
+            'div'    => array( 'class' => array(), 'style' => array() ),
+            'label'  => array( 'for' => array() ),
+            'span'   => array( 'id' => array() ),
+            'a'      => array( 'href' => array(), 'class' => array() ),
+            'select' => array( 'name' => array(), 'id' => array() ),
+            'option' => array( 'value' => array(), 'selected' => array() ),
+        );
+        echo wp_kses(
+            sprintf(
+                '<div class="misc-pub-section" style="border-top:1px solid #eee">
                 <label for="cache_action">
                     %1$s: <span id="output-cache-action">%2$s</span>
                 </label>
@@ -1525,12 +1548,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                      <a href="#" class="cancel-cache-action hide-if-no-js button-cancel">%6$s</a>
                  </div>
             </div>',
-            esc_html__('Clear cache', 'cache-performance'),
-            $available_options[$current_action],
-            esc_html__('Edit'),
-            $dropdown_options,
-            esc_html__('OK'),
-            esc_html__('Cancel')
+                esc_html__('Clear cache', 'cache-performance'),
+                $available_options[$current_action],
+                esc_html__('Edit', 'cache-performance'),
+                $dropdown_options,
+                esc_html__('OK', 'cache-performance'),
+                esc_html__('Cancel', 'cache-performance')
+            ),
+            $allowed_html
         );
     }
 
@@ -1609,7 +1634,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                 sprintf(
                     '<div class="error"><p>%s</p></div>',
                     sprintf(
-                        __('The <b>%s</b> is optimized for WordPress %s. Please disable the plugin or upgrade your WordPress installation (recommended).', 'cache-performance'),
+                        /* translators: 1: plugin name, 2: WordPress version */
+                        __('The <b>%1$s</b> is optimized for WordPress %2$s. Please disable the plugin or upgrade your WordPress installation (recommended).', 'cache-performance'),
                         'Speed Cache',
                         Optimisationio_CdnEnabler_MIN_WP
                     )
@@ -1618,17 +1644,18 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         }
 
         // permission check
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable -- checking the cache directory is writable before using it.
         if ( file_exists( Optimisationio_CACHE_DIR ) && !is_writable( Optimisationio_CACHE_DIR ) ) {
             show_message(
                 sprintf(
                     '<div class="error"><p>%s</p></div>',
                     sprintf(
-                        __('The <b>%s</b> requires write permissions %s on %s. Please <a href="%s" target="_blank">change the permissions</a>.', 'cache-performance'),
+                        /* translators: 1: plugin name, 2: required permissions, 3: directory, 4: documentation URL */
+                        __('The <b>%1$s</b> requires write permissions %2$s on %3$s. Please <a href="%4$s" target="_blank">change the permissions</a>.', 'cache-performance'),
                         'Speed Cache',
                         '<code>755</code>',
                         '<code>wp-content/cache</code>',
-                        'http://codex.wordpress.org/Changing_File_Permissions',
-                        Optimisationio_CdnEnabler_MIN_WP
+                        'https://wordpress.org/documentation/article/changing-file-permissions/'
                     )
                 )
             );
@@ -1640,7 +1667,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                 sprintf(
                     '<div class="error"><p>%s</p></div>',
                     sprintf(
-                        __('The <b>%s</b> plugin is already active. Please disable minification in the <b>%s</b> settings.', 'cache-performance'),
+                        /* translators: 1: Autoptimize plugin name, 2: this plugin name */
+                        __('The <b>%1$s</b> plugin is already active. Please disable minification in the <b>%2$s</b> settings.', 'cache-performance'),
                         'Autoptimize',
                         'Speed Cache'
                     )
