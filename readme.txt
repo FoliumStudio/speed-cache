@@ -1,9 +1,9 @@
-=== WordPress Cache and CDN plugin - fast, easy to use, instant results ===
-Contributors: pigeonhut, Jody Nesbitt, hosting.io
-Tags: Database, DB Cleanup, CDN Rewrite, WordPress Cache, Minify CSS, Minify JS, FREE CDN, leverage browser caching, Optimize DB
+=== Speed Cache – Caching, CDN & DB Optimisation ===
+Contributors: pigeonhut
+Tags: cache, cdn, minify, database optimization, browser caching
 Requires at least: 4.6
-Tested up to: 5.3
-Stable tag: 1.6.12
+Tested up to: 6.7
+Stable tag: 1.6.13
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,7 +39,7 @@ Yes, you absolutely do, and none come close to the awesome <a href="https://en-g
 
 = I would like to contribute/I have an idea =
 
-Please send us any <a href="https://optimisation.io/contact-us/">Feedback</a> if you would like to contribute or have any ideas to add.
+Please send us any <a href="https://foliumstudio.co.uk">Feedback</a> if you would like to contribute or have any ideas to add.
 
 = Do I need to use a CDN ? =
 
@@ -51,6 +51,11 @@ Bare in mind, if you choose to use a CDN, your files will be uploaded and stored
 == Screenshots ==
 
 == Changelog ==
+= 1.6.13 =
+* Renamed plugin to "Speed Cache" and updated branding to comply with WordPress.org trademark guidelines.
+* Cleaned up plugin headers, tags and contributor list.
+* Confirmed compatibility with current WordPress.
+
 = 1.5.06 =
 *
 
@@ -155,9 +160,9 @@ created changelog.txt to keep readme cleaner
 
 = CREDITS =
 This WordPress cache plugin is partial based on Cache Enabler which is a fork of Cachify.
-=== WordPress Cache and CDN plugin - fast, easy to use, instant results ===
-Contributors: pigeonhut, Jody Nesbitt, optimisation.io
-Tags: Database, DB Cleanup, CDN Rewrite, WordPress Cache, Minify CSS, Minify JS, Easy CDN, leverage browser caching, Optimize DB
+=== Speed Cache – Caching, CDN & DB Optimisation ===
+Contributors: pigeonhut
+Tags: cache, cdn, minify, database optimization, browser caching
 Requires at least: 4.6
 Tested up to: 4.8
 Stable tag: 1.3.1
@@ -192,7 +197,7 @@ Yes, you absolutely do, and none come close to the awesome <a href="https://en-g
 
 = I would like to contribute/I have an idea =
 
-Please send us any <a href="https://optimisation.io/contact-us/">Feedback</a> if you would like to contribute or have any ideas to add.
+Please send us any <a href="https://foliumstudio.co.uk">Feedback</a> if you would like to contribute or have any ideas to add.
 
 = Do I need to use a CDN ? =
 

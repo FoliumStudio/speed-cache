@@ -1,5 +1,10 @@
 .DS_Store
 */.DS_Store
 
-# local working notes — never publish
+# macOS AppleDouble metadata
+._*
+
+# local working notes / strategy briefs — never publish
 NOTE-TO-SELF.md
+cache-aware.md
+PERFORMANCE-ISSUES.md

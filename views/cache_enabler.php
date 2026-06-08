@@ -70,7 +70,7 @@
                                                             <td>
                                                             <fieldset>
                                                                <input type="checkbox" name="cache_webp" id="cache_webp" value="1" <?php checked('1', $settings['cache_webp']); ?> />
-                                                               <p class="description">Cache WebP images. See <a href=\"https://optmisation.io/\" target=\"_blank\">Optimisation.io</a> for more info </p>
+                                                               <p class="description">Cache WebP images. See <a href=\"https://foliumstudio.co.uk/\" target=\"_blank\">Folium Studio</a> for more info </p>
                                                                </fieldset>
                                                             </td>
                                                         </tr>

@@ -392,7 +392,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
             $wp_config = file( $wp_config_file );
 
             if ($wp_cache_value) {
-                $wp_cache_ce_line = "define('WP_CACHE', true); // Added by Optimisation.io". "\r\n";
+                $wp_cache_ce_line = "define('WP_CACHE', true); // Added by Folium Studio". "\r\n";
             } else {
                 $wp_cache_ce_line = '';
             }

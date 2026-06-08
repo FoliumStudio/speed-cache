@@ -1,11 +1,12 @@
 <?php
 /*
-Plugin Name: Cache for WordPress Performance
-Plugin URI: https://optimisation.io
+Plugin Name: Speed Cache
+Plugin URI: https://foliumstudio.co.uk
 Description: Simple efficient WordPress caching.
-Author: pigeonhut, Jody Nesbitt
-Author URI:https://hosting.io
-Version: 1.2.0
+Author: Folium Studio
+Author URI:https://foliumstudio.co.uk
+Version: 1.6.13
+*/
 
 /** Load all of the necessary class files for the plugin */
 spl_autoload_register('Optimisationio::autoload');

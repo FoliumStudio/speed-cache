@@ -10,7 +10,7 @@ class Optimisationio_Admin
 
     public function menu()
     {
-        add_menu_page(__('Optimisation.io', 'optimise'), __('Optimisation.io', 'optimise'), 'manage_options', 'optimisationio', array($this, 'caheEnabler'));
+        add_menu_page(__('Folium Studio', 'optimise'), __('Folium Studio', 'optimise'), 'manage_options', 'optimisationio', array($this, 'caheEnabler'));
 
         add_submenu_page('', __('Update Cache Enabler', 'optimise'), __('Update Cache Enabler', 'optimise'), 'manage_options', 'optimisationio-cache-settings', array($this, 'updateCacheEnabler'));
 
