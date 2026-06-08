@@ -13,8 +13,8 @@
                             <div class="inside">
                                 <!--            <div class="postbox" id="ppw_global_postbox">               -->
                                 <div class="inside">
-                                    <form id="companyID" method="post" action="<?php echo admin_url( 'admin.php?page=optimisationio-update-cdn-enabler' ); ?>">
-
+                                    <form id="companyID" method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=optimisationio-update-cdn-enabler' ) ); ?>">
+                                            <?php wp_nonce_field('optimisationio_save_cdn'); ?>
                                             <div>
                                                 <table cellpadding="0" cellspacing="0" border="0" width="600" class="form-table">
                                                     <tbody>

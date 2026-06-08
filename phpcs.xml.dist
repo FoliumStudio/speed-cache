@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<ruleset name="Speed Cache">
+	<description>Coding standards for the Speed Cache plugin (slug: cache-performance).</description>
+
+	<file>.</file>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/lang/*</exclude-pattern>
+
+	<!-- WordPress coding + security rules. -->
+	<rule ref="WordPress-Extra"/>
+	<rule ref="WordPress.Security"/>
+
+	<!-- Text domain must match the wp.org slug. -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="cache-performance"/>
+				<element value="default"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Legacy global prefixes used by this fork (class names, hooks, options). -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="Optimisationio"/>
+				<element value="optimisationio"/>
+				<element value="ce_"/>
+				<element value="cache"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Minimum supported versions. -->
+	<config name="minimum_wp_version" value="4.6"/>
+	<config name="testVersion" value="7.4-"/>
+</ruleset>

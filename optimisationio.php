@@ -4,9 +4,19 @@ Plugin Name: Speed Cache
 Plugin URI: https://foliumstudio.co.uk
 Description: Simple efficient WordPress caching.
 Author: Folium Studio
-Author URI:https://foliumstudio.co.uk
+Author URI: https://foliumstudio.co.uk
 Version: 1.6.13
+Requires at least: 4.6
+Requires PHP: 7.4
+Text Domain: cache-performance
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
 /** Load all of the necessary class files for the plugin */
 spl_autoload_register('Optimisationio::autoload');
@@ -27,7 +37,7 @@ class Optimisationio
 
     const MIN_PHP_VERSION = '5.2.4';
     const MIN_WP_VERSION  = '4.3';
-    const TEXT_DOMAIN     = 'Optimisationio';
+    const TEXT_DOMAIN     = 'cache-performance';
     const OPTION_KEY      = 'Optimisationio_rev3a';
     const FILE            = __FILE__;
 
@@ -37,7 +47,6 @@ class Optimisationio
      */
     public static function getInstance()
     {
-        session_start();
         if (!self::$instance) {
             self::$instance = new self();
         }
@@ -55,7 +64,6 @@ class Optimisationio
             return;
         }
         add_action('init', array($this, 'textDomain'));
-        register_uninstall_hook(__FILE__, array(__CLASS__, 'uninstall'));
 
         new Optimisationio_CacheEnabler;
         new Optimisationio_CacheEnablerDisk;
@@ -118,9 +126,11 @@ class Optimisationio
     /**
      * Fired when the plugin is uninstalled.
      */
-    public function uninstall()
+    public static function uninstall()
     {
         delete_option(self::OPTION_KEY);
+        delete_option(self::OPTION_KEY . '_settings');
+        delete_option(self::OPTION_KEY . '_cdnsettings');
     }
 
     // -------------------------------------------------------------------------
@@ -215,7 +225,7 @@ register_deactivation_hook(
 register_uninstall_hook(
     __FILE__,
     array(
-        'Optimisationio_CacheEnabler',
-        'on_uninstall'
+        'Optimisationio',
+        'uninstall'
     )
 );

@@ -1,7 +1,7 @@
 <div class="cg-pane-small">
 		<div class="cg-panel">
 		  <?php if($cacheSize > 0): ?>
-                                    <div class="cg-btn-dark">Current Cached Files Size : <?php echo $cacheSize; ?></div>
+                                    <div class="cg-btn-dark">Current Cached Files Size : <?php echo esc_html($cacheSize); ?></div>
                                 <?php endif; ?>
                             Add a CDN for even better performance or
                              <a  target="-blank" href="https://foliumstudio.co.uk">use ours.</a>

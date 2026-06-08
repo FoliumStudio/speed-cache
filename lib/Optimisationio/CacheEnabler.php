@@ -573,7 +573,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         if ( !Optimisationio_CacheEnablerDisk::is_permalink() AND current_user_can('manage_options') ) { ?>
 
             <div class="error">
-                <p><?php printf( __('The <b>%s</b> plugin requires a custom permalink structure to start caching properly. Please go to <a href="%s">Permalink</a> to enable it.', 'optimisationio'), 'Optimisationio', admin_url( 'options-permalink.php' ) ); ?></p>
+                <p><?php printf( __('The <b>%s</b> plugin requires a custom permalink structure to start caching properly. Please go to <a href="%s">Permalink</a> to enable it.', 'cache-performance'), 'Speed Cache', admin_url( 'options-permalink.php' ) ); ?></p>
             </div>
 
         <?php
@@ -671,9 +671,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                 ),
                 admin_url('options-general.php')
             ),
-            esc_html__('Disk Cache', 'optimisationio'),
-            ( empty($size) ? esc_html__('Empty', 'optimisationio') : size_format($size) ),
-            esc_html__('Cache Size', 'optimisationio')
+            esc_html__('Disk Cache', 'cache-performance'),
+            ( empty($size) ? esc_html__('Empty', 'cache-performance') : size_format($size) ),
+            esc_html__('Cache Size', 'cache-performance')
         );
 
         return $items;
@@ -731,8 +731,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                 'id'      => 'clear-cache',
                 'href'   => wp_nonce_url( add_query_arg('_cache', 'clear'), '_cache__clear_nonce'),
                 'parent' => 'top-secondary',
-                'title'     => '<span class="ab-item">'.esc_html__('Clear Cache', 'optimisationio').'</span>',
-                'meta'   => array( 'title' => esc_html__('Clear Cache', 'optimisationio') )
+                'title'     => '<span class="ab-item">'.esc_html__('Clear Cache', 'cache-performance').'</span>',
+                'meta'   => array( 'title' => esc_html__('Clear Cache', 'cache-performance') )
             )
         );
 
@@ -743,8 +743,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                     'id'      => 'clear-url-cache',
                     'href'   => wp_nonce_url( add_query_arg('_cache', 'clearurl'), '_cache__clear_nonce'),
                     'parent' => 'top-secondary',
-                    'title'     => '<span class="ab-item">'.esc_html__('Clear URL Cache', 'optimisationio').'</span>',
-                    'meta'   => array( 'title' => esc_html__('Clear URL Cache', 'optimisationio') )
+                    'title'     => '<span class="ab-item">'.esc_html__('Clear URL Cache', 'cache-performance').'</span>',
+                    'meta'   => array( 'title' => esc_html__('Clear URL Cache', 'cache-performance') )
                 )
             );
         }
@@ -887,7 +887,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
         echo sprintf(
             '<div class="notice notice-success is-dismissible"><p>%s</p></div>',
-            esc_html__('The cache has been cleared.', 'optimisationio')
+            esc_html__('The cache has been cleared.', 'cache-performance')
         );
     }
 
@@ -1494,8 +1494,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         // init variables
         $dropdown_options = '';
         $available_options = array(
-            esc_html__('Completely', 'optimisationio'),
-            esc_html__('Page specific', 'optimisationio')
+            esc_html__('Completely', 'cache-performance'),
+            esc_html__('Page specific', 'cache-performance')
         );
 
         // set dropdown options
@@ -1525,7 +1525,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                      <a href="#" class="cancel-cache-action hide-if-no-js button-cancel">%6$s</a>
                  </div>
             </div>',
-            esc_html__('Clear cache', 'optimisationio'),
+            esc_html__('Clear cache', 'cache-performance'),
             $available_options[$current_action],
             esc_html__('Edit'),
             $dropdown_options,
@@ -1550,7 +1550,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         }
 
         // plugin data
-        $plugin_data = get_plugin_data(CE_FILE);
+        $plugin_data = get_plugin_data(Optimisationio::FILE);
 
         // enqueue scripts
         switch($hook) {
@@ -1558,7 +1558,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
             case 'post.php':
                 wp_enqueue_script(
                     'cache-post',
-                    plugins_url('js/post.js', CE_FILE),
+                    plugins_url('js/post.js', Optimisationio::FILE),
                     array('jquery'),
                     $plugin_data['Version'],
                     true
@@ -1584,9 +1584,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
     public static function _minify_select() {
         return array(
-            self::MINIFY_DISABLED  => esc_html__('Disabled', 'optimisationio'),
-            self::MINIFY_HTML_ONLY => esc_html__('HTML', 'optimisationio'),
-            self::MINIFY_HTML_JS   => esc_html__('HTML & Inline JS', 'optimisationio')
+            self::MINIFY_DISABLED  => esc_html__('Disabled', 'cache-performance'),
+            self::MINIFY_HTML_ONLY => esc_html__('HTML', 'cache-performance'),
+            self::MINIFY_HTML_JS   => esc_html__('HTML & Inline JS', 'cache-performance')
         );
     }
 
@@ -1609,8 +1609,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                 sprintf(
                     '<div class="error"><p>%s</p></div>',
                     sprintf(
-                        __('The <b>%s</b> is optimized for WordPress %s. Please disable the plugin or upgrade your WordPress installation (recommended).', 'optimisationio'),
-                        'Cache Enabler',
+                        __('The <b>%s</b> is optimized for WordPress %s. Please disable the plugin or upgrade your WordPress installation (recommended).', 'cache-performance'),
+                        'Speed Cache',
                         Optimisationio_CdnEnabler_MIN_WP
                     )
                 )
@@ -1623,8 +1623,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                 sprintf(
                     '<div class="error"><p>%s</p></div>',
                     sprintf(
-                        __('The <b>%s</b> requires write permissions %s on %s. Please <a href="%s" target="_blank">change the permissions</a>.', 'optimisationio'),
-                        'Cache Enabler',
+                        __('The <b>%s</b> requires write permissions %s on %s. Please <a href="%s" target="_blank">change the permissions</a>.', 'cache-performance'),
+                        'Speed Cache',
                         '<code>755</code>',
                         '<code>wp-content/cache</code>',
                         'http://codex.wordpress.org/Changing_File_Permissions',
@@ -1640,9 +1640,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                 sprintf(
                     '<div class="error"><p>%s</p></div>',
                     sprintf(
-                        __('The <b>%s</b> plugin is already active. Please disable minification in the <b>%s</b> settings.', 'optimisationio'),
+                        __('The <b>%s</b> plugin is already active. Please disable minification in the <b>%s</b> settings.', 'cache-performance'),
                         'Autoptimize',
-                        'Optimisationio'
+                        'Speed Cache'
                     )
                 )
             );
@@ -1660,9 +1660,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     public static function register_textdomain() {
 
         load_plugin_textdomain(
-            'optimisationio',
+            'cache-performance',
             false,
-            'optimisationio/lang'
+            dirname( Optimisationio_CdnEnabler_BASE ) . '/lang'
         );
     }
 

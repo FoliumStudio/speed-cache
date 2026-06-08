@@ -19,19 +19,28 @@ if ( !empty($_COOKIE) ) {
 	}
 }
 
+// sanitise the host (strip anything that is not a valid host character)
+$host = isset( $_SERVER['HTTP_HOST'] ) ? strtolower( (string) $_SERVER['HTTP_HOST'] ) : '';
+$host = preg_replace( '/[^a-z0-9\-\.:]/', '', $host );
+
+// request path without the query string
+$uri_path = (string) parse_url(
+	isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '',
+	PHP_URL_PATH
+);
+
+// reject path traversal attempts
+if ( strpos( $uri_path, '..' ) !== false ) {
+	return false;
+}
+
 // base path
 $path = sprintf(
 	'%s%s%s%s',
 	WP_CONTENT_DIR . '/cache/optimisationio',
 	DIRECTORY_SEPARATOR,
-	parse_url(
-		'http://' .strtolower($_SERVER['HTTP_HOST']),
-		PHP_URL_HOST
-	),
-	parse_url(
-		$_SERVER['REQUEST_URI'],
-		PHP_URL_PATH
-	)
+	$host,
+	$uri_path
 );
 
 // add trailing slash

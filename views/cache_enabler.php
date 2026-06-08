@@ -13,8 +13,8 @@
                                 <!--            <div class="postbox" id="ppw_global_postbox">               -->
                                 <div class="inside">
 
-                                    <form id="companyID" method="post" action="<?php echo admin_url( 'admin.php?page=optimisationio-cache-settings' ); ?>">
-
+                                    <form id="companyID" method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=optimisationio-cache-settings' ) ); ?>">
+                                            <?php wp_nonce_field('optimisationio_save_cache'); ?>
                                             <div>
                                                 <table cellpadding="0" cellspacing="0" border="0" width="600" class="form-table">
                                                     <tbody>
@@ -70,7 +70,7 @@
                                                             <td>
                                                             <fieldset>
                                                                <input type="checkbox" name="cache_webp" id="cache_webp" value="1" <?php checked('1', $settings['cache_webp']); ?> />
-                                                               <p class="description">Cache WebP images. See <a href=\"https://foliumstudio.co.uk/\" target=\"_blank\">Folium Studio</a> for more info </p>
+                                                               <p class="description">Cache WebP images. See <a href="https://foliumstudio.co.uk/" target="_blank" rel="noopener">Folium Studio</a> for more info </p>
                                                                </fieldset>
                                                             </td>
                                                         </tr>

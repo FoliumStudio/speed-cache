@@ -1,0 +1,108 @@
+name: Lint
+
+# The local dev box has no PHP/phpcs, so this workflow is the real verification
+# path for the security audit + PHP 8.4 compliance work (GitHub runners ship PHP).
+#
+#   php-lint    – syntax check (php -l) across 7.4 → 8.4. Blocking.
+#   php-compat  – PHPCompatibility against testVersion 7.4-. BLOCKING: this is the
+#                 PHP 8.4 compliance gate. If it goes red, a real incompatibility
+#                 slipped through.
+#   phpcs       – full WordPress-Extra + Security standards. Advisory (annotations
+#                 only) — the codebase still carries lint-level i18n/escaping debt
+#                 tracked in SECURITY-AUDIT.md.
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  php-lint:
+    name: php -l on PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ '7.4', '8.1', '8.3', '8.4' ]
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: php -l all files
+        run: |
+          set -e
+          ERR=0
+          while IFS= read -r -d '' f; do
+            php -l "$f" >/dev/null || { php -l "$f"; ERR=1; }
+          done < <(find . -name '*.php' \
+                    -not -path './vendor/*' \
+                    -not -path './node_modules/*' -print0)
+          exit $ERR
+
+  php-compat:
+    name: PHP 8.4 compatibility (blocking)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - name: Install PHPCompatibility
+        run: |
+          composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+          composer global require --no-interaction --no-progress \
+            squizlabs/php_codesniffer \
+            phpcompatibility/phpcompatibility-wp \
+            dealerdirect/phpcodesniffer-composer-installer
+          echo "$(composer global config bin-dir --absolute)" >> "$GITHUB_PATH"
+
+      - name: PHPCompatibility (PHP 7.4 → 8.4)
+        run: |
+          phpcs -p . \
+            --standard=PHPCompatibilityWP \
+            --runtime-set testVersion 7.4- \
+            --extensions=php \
+            --ignore='*/vendor/*,*/node_modules/*'
+
+  phpcs:
+    name: WordPress Coding Standards (advisory)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: cs2pr
+
+      - name: Install PHPCS + WordPress standards
+        run: |
+          composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+          composer global require --no-interaction --no-progress \
+            squizlabs/php_codesniffer \
+            wp-coding-standards/wpcs \
+            phpcompatibility/phpcompatibility-wp \
+            dealerdirect/phpcodesniffer-composer-installer
+          echo "$(composer global config bin-dir --absolute)" >> "$GITHUB_PATH"
+
+      - name: Verify installed standards
+        run: phpcs -i
+
+      - name: Run phpcs (PR annotations, advisory)
+        continue-on-error: true
+        run: phpcs -q --report=checkstyle | cs2pr

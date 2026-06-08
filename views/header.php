@@ -18,7 +18,7 @@
 <div class="cg-container">
 <div class="cg-tab-wrap">
    <ul class="tabs">
-   <?php $page =  sanitize_text_field($_GET['page']); ?>
+   <?php $page = isset($_GET['page']) ? sanitize_text_field( wp_unslash($_GET['page']) ) : ''; ?>
   <li> <a class="nav-tab <?php if($page == 'optimisationio')echo 'nav-tab-active';?>" href="?page=optimisationio"> Caching </a></li>
   <li><a class="nav-tab <?php if($page == 'optimisationio-cdn-enabler')echo 'nav-tab-active';?>"  href="admin.php?page=optimisationio-cdn-enabler"> CDN Rewrite </a> </li>
     </ul>

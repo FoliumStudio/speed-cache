@@ -283,7 +283,7 @@ class Optimisationio_CacheEnablerDisk {
 			$regex_rule = '#(?<=(?:(ref|src|set)=[\"\']))(?:http[s]?[^\"\']+)(\.png|\.jp[e]?g)(?:[^\"\']+)?(?=[\"\')])#';
 
 			// call the webp converter callback
-			$converted_data = preg_replace_callback($regex_rule,'self::_convert_webp',$data);
+			$converted_data = preg_replace_callback($regex_rule, array(__CLASS__, '_convert_webp'), $data);
 
 			self::_create_file( self::_file_webp_html(), $converted_data.$cache_signature." (webp) -->" );
 
@@ -433,19 +433,26 @@ class Optimisationio_CacheEnablerDisk {
 
 	public static function _file_path($path = NULL) {
 
+		// Sanitise the host (strip anything that is not a valid host character).
+		$host = isset($_SERVER['HTTP_HOST']) ? strtolower( (string) $_SERVER['HTTP_HOST'] ) : '';
+		$host = preg_replace('/[^a-z0-9\-\.:]/', '', $host);
+
+		$request_uri = ( $path ? $path : ( isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '' ) );
+		$uri_path    = (string) parse_url( $request_uri, PHP_URL_PATH );
+
+		// Reject path traversal attempts.
+		if ( strpos( $uri_path, '..' ) !== false ) {
+			wp_die('Path is not valid.');
+		}
+
 		$path = sprintf(
 			'%s%s%s%s',
 			Optimisationio_CACHE_DIR,
 			DIRECTORY_SEPARATOR,
-			parse_url(
-				'http://' .strtolower($_SERVER['HTTP_HOST']),
-				PHP_URL_HOST
-			),
-			parse_url(
-				( $path ? $path : $_SERVER['REQUEST_URI'] ),
-				PHP_URL_PATH
-			)
+			$host,
+			$uri_path
 		);
+
 		if ( is_file($path) > 0 ) {
 			wp_die('Path is not valid.');
 		}
