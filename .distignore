@@ -1,0 +1,35 @@
+# Files and folders that must NOT be deployed to the WordPress.org SVN repo.
+# Used by 10up/action-wordpress-plugin-deploy.
+
+# Version control / CI / dev tooling
+/.git
+/.github
+/.gitignore
+/.distignore
+/.editorconfig
+/phpcs.xml
+/phpcs.xml.dist
+
+# wp.org listing assets (icon/banner/screenshots) are published to SVN /assets
+# by the deploy action and must NOT live inside the distributed plugin zip.
+/.wordpress-org
+
+# Build output / dependencies
+/dist
+/build
+/node_modules
+/vendor
+
+# Local-only working notes (never published)
+/NOTE-TO-SELF.md
+/SECURITY-AUDIT.md
+/cache-aware.md
+/PERFORMANCE-ISSUES.md
+
+# Build artifacts
+*.zip
+
+# OS cruft
+.DS_Store
+*/.DS_Store
+._*
