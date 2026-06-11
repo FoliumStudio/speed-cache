@@ -3,12 +3,12 @@
 <h2><!--Wordpress notices here --></h2>
  <header>
     <div class="cg-col-left">
-        <h2>WP Cache</h2>
+        <h2>Cache by Folium</h2>
         Simple, effective Caching Plugin
 </div>
 
 <div class="cg-col-right"><strong>Help us build a better product</strong>
-<p><a target="blank" href="#">Rate us on WordPress.org</a></p>
+<p><a target="blank" href="https://wordpress.org/support/plugin/cache-performance/reviews/#new-post">Rate us on WordPress.org</a></p>
 <div class="cg-stars">
 
 </div>
