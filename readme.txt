@@ -3,7 +3,7 @@ Contributors: pigeonhut
 Tags: cache, cdn, minify, database optimization, browser caching
 Requires at least: 4.6
 Tested up to: 7.0
-Stable tag: 1.6.15
+Stable tag: 1.6.16
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,9 @@ Bare in mind, if you choose to use a CDN, your files will be uploaded and stored
 == Screenshots ==
 
 == Changelog ==
+= 1.6.16 =
+* Removed a stray generated report file from the plugin root and hardened the build excludes so no development markdown ships in the distribution.
+
 = 1.6.15 =
 * Settings page header now shows "Cache by Folium" (was an older hardcoded title) and the rate-us link points to the plugin's reviews page.
 

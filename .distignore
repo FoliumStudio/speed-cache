@@ -33,3 +33,6 @@
 .DS_Store
 */.DS_Store
 ._*
+
+# Safety net: no root-level markdown ever ships (readme.txt is the wp.org file)
+/*.md
