@@ -3,7 +3,7 @@ Contributors: pigeonhut
 Tags: cache, cdn, minify, database optimization, browser caching
 Requires at least: 4.6
 Tested up to: 7.0
-Stable tag: 1.6.16
+Stable tag: 1.6.17
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,10 @@ Added Automatic CDN support, Free for now, just enable in settings and your site
 We have many features planned and have an active development cycle which will be user focused based on feedback.
 
 For extra performance we recommend our <a href="https://wordpress.org/plugins/wp-disable/">Disbaler plugin</a>, which helps <strong>reduce HTTP requests</strong> and removes unused items from your website.
-For image compression and optimization we recommend our <a href="https://wordpress.org/plugins/wp-image-compression/">Image Compression plugin, now includes a Dedicated Image CDN</a>
+
+<strong>Coming Soon</strong> – Dedicated WooCommerce caching for optimized e-commerce performance.
+
+For image compression and optimization we recommend our <a href="https://wordpress.org/plugins/wp-image-compression/">Image Compression plugin</a>, which includes dedicated image optimization tools.
 
 == Installation ==
 
@@ -51,6 +54,10 @@ Bare in mind, if you choose to use a CDN, your files will be uploaded and stored
 == Screenshots ==
 
 == Changelog ==
+= 1.6.17 =
+* Updated plugin description with information about upcoming dedicated WooCommerce caching feature.
+* Simplified image compression plugin recommendation.
+
 = 1.6.16 =
 * Removed a stray generated report file from the plugin root and hardened the build excludes so no development markdown ships in the distribution.
 
