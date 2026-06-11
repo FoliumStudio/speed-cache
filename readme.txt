@@ -1,9 +1,9 @@
-=== Speed Cache ===
+=== Cache by Folium ===
 Contributors: pigeonhut
 Tags: cache, cdn, minify, database optimization, browser caching
 Requires at least: 4.6
 Tested up to: 7.0
-Stable tag: 1.6.13
+Stable tag: 1.6.14
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ This section describes how to install the plugin and get it working.
 
 1. Upload the plugin files to the `/wp-content/plugins/plugin-name` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Use the Speed Cache settings screen to configure the plugin
+3. Use the Cache by Folium settings screen to configure the plugin
 
 
 == Frequently Asked Questions ==
@@ -51,6 +51,9 @@ Bare in mind, if you choose to use a CDN, your files will be uploaded and stored
 == Screenshots ==
 
 == Changelog ==
+= 1.6.14 =
+* Renamed plugin to "Cache by Folium" for unique, clearly branded naming per WordPress.org plugin review feedback. No functional changes; slug and text domain unchanged.
+
 = 1.6.13 =
 * Renamed plugin to "Speed Cache" and updated branding to comply with WordPress.org trademark guidelines.
 * Security: added nonce and capability checks to all settings forms (CSRF hardening).

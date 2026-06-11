@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Speed Cache
+Plugin Name: Cache by Folium
 Plugin URI: https://foliumstudio.co.uk
 Description: Simple efficient WordPress caching.
 Author: Folium Studio
 Author URI: https://foliumstudio.co.uk
-Version: 1.6.13
+Version: 1.6.14
 Requires at least: 4.6
 Requires PHP: 7.4
 Text Domain: cache-performance

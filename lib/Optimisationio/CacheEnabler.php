@@ -585,7 +585,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                 printf(
                     /* translators: 1: plugin name, 2: Permalink settings URL */
                     wp_kses( __('The <b>%1$s</b> plugin requires a custom permalink structure to start caching properly. Please go to <a href="%2$s">Permalink</a> to enable it.', 'cache-performance'), array( 'b' => array(), 'a' => array( 'href' => array() ) ) ),
-                    esc_html( 'Speed Cache' ),
+                    esc_html( 'Cache by Folium' ),
                     esc_url( admin_url( 'options-permalink.php' ) )
                 );
                 ?></p>
@@ -1641,7 +1641,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                     sprintf(
                         /* translators: 1: plugin name, 2: WordPress version */
                         __('The <b>%1$s</b> is optimized for WordPress %2$s. Please disable the plugin or upgrade your WordPress installation (recommended).', 'cache-performance'),
-                        'Speed Cache',
+                        'Cache by Folium',
                         Optimisationio_CdnEnabler_MIN_WP
                     )
                 )
@@ -1657,7 +1657,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                     sprintf(
                         /* translators: 1: plugin name, 2: required permissions, 3: directory, 4: documentation URL */
                         __('The <b>%1$s</b> requires write permissions %2$s on %3$s. Please <a href="%4$s" target="_blank">change the permissions</a>.', 'cache-performance'),
-                        'Speed Cache',
+                        'Cache by Folium',
                         '<code>755</code>',
                         '<code>wp-content/cache</code>',
                         'https://wordpress.org/documentation/article/changing-file-permissions/'
@@ -1675,7 +1675,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                         /* translators: 1: Autoptimize plugin name, 2: this plugin name */
                         __('The <b>%1$s</b> plugin is already active. Please disable minification in the <b>%2$s</b> settings.', 'cache-performance'),
                         'Autoptimize',
-                        'Speed Cache'
+                        'Cache by Folium'
                     )
                 )
             );
