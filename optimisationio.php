@@ -5,7 +5,7 @@ Plugin URI: https://foliumstudio.co.uk
 Description: Simple efficient WordPress caching.
 Author: Folium Studio
 Author URI: https://foliumstudio.co.uk
-Version: 1.6.18
+Version: 1.6.19
 Requires at least: 4.6
 Requires PHP: 7.4
 Text Domain: cache-performance

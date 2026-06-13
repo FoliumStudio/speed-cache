@@ -3,7 +3,7 @@ Contributors: pigeonhut
 Tags: cache, cdn, minify, database optimization, browser caching
 Requires at least: 4.6
 Tested up to: 7.0
-Stable tag: 1.6.18
+Stable tag: 1.6.19
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,9 @@ Bare in mind, if you choose to use a CDN, your files will be uploaded and stored
 == Screenshots ==
 
 == Changelog ==
+= 1.6.19 =
+* Added the standard WordPress.org directory banner and icon asset sizes so the refreshed Cache by Folium listing artwork displays consistently.
+
 = 1.6.18 =
 * Complete Folium-family visual redesign of the Cache by Folium admin screen, including the shared By Folium shell, Dashboard/Caching/CDN/Tools tabs, ajax save/reset/clear actions, and matching suite overview card.
 * Removed the legacy blue/orange admin stylesheet so the new interface loads cleanly without flashing old styles.

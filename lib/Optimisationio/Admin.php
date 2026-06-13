@@ -13,7 +13,7 @@ class Optimisationio_Admin
                     'tagline'     => 'Page cache & CDN rewrite',
                     'icon'        => 'C',
                     'icon_url'    => plugins_url('images/cache.png', Optimisationio::FILE),
-                    'version'     => 'v1.6.18',
+                    'version'     => 'v1.6.19',
                     'active_chip' => '<span class="fl-dot"></span> <span id="wpd-active-count">0</span> rules',
                     'search_placeholder' => 'Filter settings...',
                     'stats'       => array(
@@ -64,13 +64,13 @@ class Optimisationio_Admin
             'cache-by-folium-app',
             $url . 'assets/css/cache-app.css',
             array( 'folium-ui' ),
-            file_exists( $css ) ? (string) filemtime( $css ) : '1.6.18'
+            file_exists( $css ) ? (string) filemtime( $css ) : '1.6.19'
         );
         wp_enqueue_script(
             'cache-by-folium-app',
             $url . 'assets/js/cache-app.js',
             array( 'folium-ui', 'folium-app' ),
-            file_exists( $js ) ? (string) filemtime( $js ) : '1.6.18',
+            file_exists( $js ) ? (string) filemtime( $js ) : '1.6.19',
             true
         );
         wp_localize_script( 'cache-by-folium-app', 'CacheByFoliumData', $this->app_data() );
@@ -99,7 +99,7 @@ class Optimisationio_Admin
             'cdnSettings' => wp_parse_args( get_option( Optimisationio::OPTION_KEY . '_cdnsettings', array() ), $cdn_defaults ),
             'cacheSize'   => (string) round( Optimisationio_CacheEnabler::get_cache_size() / 1000 ),
             'wpCache'     => defined( 'WP_CACHE' ) && WP_CACHE,
-            'version'     => '1.6.18',
+            'version'     => '1.6.19',
             'links'       => array(
                 'plugin'  => 'https://foliumstudio.co.uk/plugins/folium-cache/',
                 'reviews' => 'https://wordpress.org/support/plugin/cache-performance/reviews/#new-post',
