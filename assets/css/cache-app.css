@@ -1,0 +1,195 @@
+/* Cache by Folium app skin.
+   Uses shared Folium UI tokens/components; only Cache-specific identity and
+   layout helpers live here. Never styles html/body. */
+
+#wpd.cbf-app {
+	--fl-paper-glow: #f3ecda;
+	--fl-accent: #ae7317;
+	--fl-accent-strong: #8c5a10;
+	--fl-accent-ink: #855912;
+	--fl-accent-soft: #f4ead3;
+	--fl-accent-line: #e2cfa0;
+	--fl-good: #ae7317;
+	--fl-good-soft: #f4ead3;
+	--fl-good-line: #e2cfa0;
+	--fl-ring: 0 0 0 3px rgba(174, 115, 23, .22);
+	background:
+		radial-gradient(50% 38% at 6% -6%, var(--fl-paper-glow), transparent 70%),
+		radial-gradient(48% 36% at 100% -4%, var(--fl-paper-glow), transparent 68%),
+		var(--fl-paper);
+}
+
+[data-theme="dark"] #wpd.cbf-app {
+	--fl-paper-glow: #211708;
+	--fl-accent: #e5a33b;
+	--fl-accent-strong: #cf8c26;
+	--fl-accent-ink: #f0c883;
+	--fl-accent-soft: #2a1e08;
+	--fl-accent-line: #5a4220;
+	--fl-good: #e5a33b;
+	--fl-good-soft: #2a1e08;
+	--fl-good-line: #5a4220;
+	--fl-ring: 0 0 0 3px rgba(229, 163, 59, .28);
+}
+
+#wpd.cbf-app .wpd-bar {
+	background: color-mix(in oklab, var(--fl-surface) 74%, transparent);
+	backdrop-filter: blur(6px);
+}
+
+#wpd.cbf-app .wpd-mark {
+	background: linear-gradient(158deg, #e5a33b 0%, #cf8c26 55%, #9c6414 100%);
+	box-shadow: 0 1px 2px rgba(120, 80, 10, .35), inset 0 1px 0 rgba(255, 255, 255, .25);
+	color: #221504;
+}
+
+#wpd.cbf-app .wpd-mark.has-img {
+	background: #0e1114;
+	border: 0;
+	padding: 3px;
+}
+
+#wpd.cbf-app .wpd-mark.has-img img,
+#wpd.cbf-app .wpd-mini-mark.has-img img {
+	border-radius: inherit;
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+#wpd.cbf-app .wpd-menu-item.is-active {
+	background: var(--fl-accent-soft);
+}
+
+.cbf-screen {
+	max-width: 980px;
+}
+
+.cbf-hero {
+	align-items: center;
+	display: flex;
+	gap: 28px;
+	justify-content: space-between;
+	margin-bottom: 16px;
+	overflow: hidden;
+	padding: 30px 32px;
+	position: relative;
+}
+
+.cbf-hero::before {
+	background:
+		radial-gradient(circle at 20% 20%, rgba(229, 163, 59, .26), transparent 42%),
+		linear-gradient(135deg, rgba(244, 234, 211, .84), transparent);
+	content: "";
+	inset: 0;
+	pointer-events: none;
+	position: absolute;
+}
+
+.cbf-hero-copy {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 10px;
+	max-width: 640px;
+	min-width: 0;
+	position: relative;
+	z-index: 1;
+}
+
+.cbf-bolt {
+	align-items: center;
+	background: linear-gradient(158deg, #e5a33b 0%, #cf8c26 55%, #9c6414 100%);
+	border-radius: 18px;
+	box-shadow: 0 18px 38px rgba(120, 80, 10, .22), inset 0 1px 0 rgba(255, 255, 255, .32);
+	color: #221504;
+	display: flex;
+	flex: 0 0 auto;
+	height: 86px;
+	justify-content: center;
+	position: relative;
+	width: 86px;
+	z-index: 1;
+}
+
+.cbf-bolt .fl-i {
+	height: 38px;
+	width: 38px;
+}
+
+.cbf-bolt svg {
+	stroke-width: 1.9;
+}
+
+.cbf-dashboard-grid {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr);
+	margin-top: 16px;
+}
+
+.cbf-actions {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.cbf-next-steps {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.cbf-next-steps .fl-banner {
+	align-items: center;
+}
+
+.cbf-row .fl-row-ctrl {
+	min-width: 230px;
+	justify-content: flex-end;
+}
+
+.cbf-row .fl-input,
+.cbf-row .fl-select {
+	max-width: 320px;
+	width: 100%;
+}
+
+#wpd.cbf-app .fl-metric-value.is-good {
+	color: var(--fl-accent);
+}
+
+#wpd.cbf-app .fl-banner--accent {
+	background: var(--fl-accent-soft);
+	border-color: var(--fl-accent-line);
+}
+
+@media (max-width: 1100px) {
+	.cbf-dashboard-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 760px) {
+	.cbf-hero {
+		align-items: flex-start;
+		flex-direction: column;
+		padding: 22px;
+	}
+
+	.cbf-bolt {
+		height: 64px;
+		width: 64px;
+	}
+
+	.cbf-row {
+		grid-template-columns: 1fr;
+	}
+
+	.cbf-row .fl-row-ctrl {
+		justify-content: flex-start;
+		min-width: 0;
+	}
+}

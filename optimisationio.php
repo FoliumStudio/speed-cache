@@ -5,7 +5,7 @@ Plugin URI: https://foliumstudio.co.uk
 Description: Simple efficient WordPress caching.
 Author: Folium Studio
 Author URI: https://foliumstudio.co.uk
-Version: 1.6.17
+Version: 1.6.18
 Requires at least: 4.6
 Requires PHP: 7.4
 Text Domain: cache-performance
@@ -28,6 +28,10 @@ define('Optimisationio_CdnEnabler_DIR', dirname(__FILE__));
 define('Optimisationio_CdnEnabler_BASE', plugin_basename(__FILE__));
 define('Optimisationio_CdnEnabler_MIN_WP', '3.8');
 define('Optimisationio_CACHE_DIR', WP_CONTENT_DIR. '/cache/optimisationio');
+
+// Shared Folium UI design framework (vendored, newest-wins). Boots on
+// plugins_loaded:4 and owns the single "By Folium" admin menu + app frame.
+require_once __DIR__ . '/lib/folium-ui/loader.php';
 
 
 

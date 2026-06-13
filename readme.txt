@@ -3,7 +3,7 @@ Contributors: pigeonhut
 Tags: cache, cdn, minify, database optimization, browser caching
 Requires at least: 4.6
 Tested up to: 7.0
-Stable tag: 1.6.17
+Stable tag: 1.6.18
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,11 +19,11 @@ Added Automatic CDN support, Free for now, just enable in settings and your site
 
 We have many features planned and have an active development cycle which will be user focused based on feedback.
 
-For extra performance we recommend our <a href="https://wordpress.org/plugins/wp-disable/">Disbaler plugin</a>, which helps <strong>reduce HTTP requests</strong> and removes unused items from your website.
+For extra performance we recommend <a href="https://wordpress.org/plugins/wp-disable/">Featherweight</a>, our request cleanup plugin for reducing front-end weight and removing unused WordPress output.
 
 <strong>Coming Soon</strong> – Dedicated WooCommerce caching for optimized e-commerce performance.
 
-For image compression and optimization we recommend our <a href="https://wordpress.org/plugins/wp-image-compression/">Image Compression plugin</a>, which includes dedicated image optimization tools.
+For hands-on performance work, see <a href="https://foliumstudio.co.uk">Folium Studio</a>.
 
 == Installation ==
 
@@ -54,6 +54,10 @@ Bare in mind, if you choose to use a CDN, your files will be uploaded and stored
 == Screenshots ==
 
 == Changelog ==
+= 1.6.18 =
+* Complete Folium-family visual redesign of the Cache by Folium admin screen, including the shared By Folium shell, Dashboard/Caching/CDN/Tools tabs, ajax save/reset/clear actions, and matching suite overview card.
+* Removed the legacy blue/orange admin stylesheet so the new interface loads cleanly without flashing old styles.
+
 = 1.6.17 =
 * Updated plugin description with information about upcoming dedicated WooCommerce caching feature.
 * Simplified image compression plugin recommendation.
@@ -80,7 +84,7 @@ Bare in mind, if you choose to use a CDN, your files will be uploaded and stored
 = 1.5.05 =
 * Removed images from Cache CDN for even better performance, images will be served via a dedicated image CDN.
 * Plugin now serves css/js via our cdn
-* Install our <a href="https://wordpress.org/plugins/wp-image-compression">Image Plugin</a> for a dedicated image CDN among other features
+* Promoted the Folium performance suite for dedicated image and CDN workflows.
 
 = 1.5.04 =
 * Fixed issue where existing CDN Zone not being deleted on Disable

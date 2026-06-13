@@ -17,9 +17,7 @@ name: Deploy to WordPress.org
 # Rehearse safely first: Actions tab → "Deploy to WordPress.org" → Run workflow
 # → leave dry_run = true. A dry run does everything except the final SVN commit.
 #
-# NOTE: this plugin is currently CLOSED on wp.org. Committing corrected code to
-# trunk is one of the required reopen steps, but it does NOT reopen the plugin on
-# its own — after deploying, reply to plugins@wordpress.org to request re-review.
+# Cache by Folium is live on wp.org again after the 2026-06 rebrand/review.
 
 on:
   push:

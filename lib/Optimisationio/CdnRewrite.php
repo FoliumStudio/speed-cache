@@ -35,7 +35,6 @@ class Optimisationio_CdnRewrite
     public function initialize()
     {
         if ('' == $this->file_extensions || '' == $this->cdn_root_url) {
-            add_action('admin_notices', array($this, 'settings_warning'));
             return;
         }
 
